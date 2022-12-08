@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+set -x
 
 VERSION=4.1.3
 STACK=heroku-20
@@ -21,7 +22,8 @@ mkdir -p /src/tesseract-${VERSION}-${STACK}/lib
 cp -P /lib/x86_64-linux-gnu/liblept*so* /src/tesseract-4.1.3-${STACK}/lib/
 cp -P /lib/x86_64-linux-gnu/libgif*so* /src/tesseract-4.1.3-${STACK}/lib/
 mkdir -p /src/tesseract-${VERSION}-${STACK}/share
-curl --fail -sq -O /src/tesseract-${VERSION}-${STACK}/share/eng.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata
+curl --fail -sq -Lo "/src/tesseract-${VERSION}-${STACK}/share/eng.traineddata" "https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata"
 cd /src
 umask 000
 tar -czpf tesseract-${VERSION}-${STACK}.tar.gz tesseract-${VERSION}-${STACK}
+rm -rf tesseract-${VERSION}-${STACK}
