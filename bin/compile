@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -euo pipefail
+
+VERSION="4.1.3"
+
+BUILD_DIR="$1"
+# CACHE_DIR="$2"
+# ENV_DIR="$3"
+
+case "$STACK" in
+    "heroku-20")
+        ;;
+    *)
+        echo >&2 "Unsupported stack $STACK"
+        exit 1
+        ;;
+esac
+
+TESSERACT_DIR="$BUILD_DIR/.tesseract"
+
+if [[ -e "$TESSERACT_DIR" ]]; then
+    echo "-----> Not writing out policy.xml, since \$TESSERACT_DIR already exists";
+    exit 0
+fi
+
+mkdir "$TESSERACT_DIR"
+echo "-----> Extracting Tesseract to $TESSERACT_DIR"
+tar -zxvf "tesseract-${VERSION}-${STACK}.tar.gz"
+mv "tesseract-${VERSION}"/* "$TESSERACT_DIR"
+rm -rf "tesseract-${VERSION}"
+
+echo "-----> Updating environment variables"
+
+PROFILE_PATH="$BUILD_DIR/.profile.d/tesseract.sh"
+mkdir -p "$(dirname "$PROFILE_PATH")"
+echo "export PATH=\"$TESSERACT_DIR/bin:\$PATH\"" > "$PROFILE_PATH"
+echo "export LD_LIBRARY_PATH=\"$TESSERACT_DIR/lib:\$LD_LIBRARY_PATH\"" >> "$PROFILE_PATH"
+echo "export TESSDATA_PREFIX=\"$TESSERACT_DIR/share\"" >> "$PROFILE_PATH"
