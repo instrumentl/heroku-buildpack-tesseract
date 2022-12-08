@@ -1,8 +1,12 @@
-This is a buildpack adding a statically-compiled version of the [tesseract](https://github.com/tesseract-ocr/tesseract)
-package for Heroku. It uses the most recent 4.x version and supports several buildpacks.
+This is a buildpack adding a heroku-compatible version of the [tesseract](https://github.com/tesseract-ocr/tesseract)
+package. It uses the most recent 4.x version and supports stacks 20 and 22. It currently only contains the language pack
+for English.
 
 # General build instructions
 
-`docker run -v (pwd):/src --rm -it heroku/heroku:20 bash /src/build.sh`
+```sh
+docker run -v (pwd):/src --rm -it heroku/heroku:20 bash /src/build.sh heroku-20
+docker run -v (pwd):/src --rm -it heroku/heroku:22 bash /src/build.sh heroku-22
+```
 
-Now from the host, you can tar up the `tesseract-4.1.3-heroku-20` directory.
+This will generate some tarballs you can check in.

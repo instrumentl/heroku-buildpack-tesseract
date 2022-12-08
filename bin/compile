@@ -11,6 +11,8 @@ BUILD_DIR="$1"
 case "$STACK" in
     "heroku-20")
         ;;
+    "heroku-22")
+        ;;
     *)
         echo >&2 "Unsupported stack $STACK"
         exit 1
