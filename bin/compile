@@ -17,10 +17,10 @@ case "$STACK" in
         ;;
 esac
 
-TESSERACT_DIR="$BUILD_DIR/.tesseract"
+TESSERACT_DIR="$HOME/vendor/tesseract"
 
 if [[ -e "$TESSERACT_DIR" ]]; then
-    echo "-----> Not writing out policy.xml, since \$TESSERACT_DIR already exists";
+    echo "-----> Not extracting Tesseract, since \$TESSERACT_DIR already exists";
     exit 0
 fi
 
