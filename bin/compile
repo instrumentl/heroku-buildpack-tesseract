@@ -26,9 +26,7 @@ fi
 
 mkdir "$TESSERACT_DIR"
 echo "-----> Extracting Tesseract to $TESSERACT_DIR"
-tar -zxvf "tesseract-${VERSION}-${STACK}.tar.gz"
-mv "tesseract-${VERSION}"/* "$TESSERACT_DIR"
-rm -rf "tesseract-${VERSION}"
+tar --strip-components=1 -C "$TESSERACT_DIR" -zxvf "tesseract-${VERSION}-${STACK}.tar.gz"
 
 echo "-----> Updating environment variables"
 
